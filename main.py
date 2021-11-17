@@ -18,8 +18,8 @@ def retry(func):
         while True:
             try:
                 return func(*args, **kwargs)
-            except:
-                pass
+            except RuntimeError as e:
+                print(e)
     return inner
 
 
@@ -43,7 +43,7 @@ result = generate_list()
 list(map(lambda x: print(x), result))
 
 try:
-    with open('output.txt', 'a') as o:
+    with open('output.txt', 'w') as o:
         for c in result:
             o.write(c + '\n')
 except:
