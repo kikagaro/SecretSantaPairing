@@ -23,7 +23,7 @@ output_file = f"./output-{ID}.yml"
 santas = []
 santa_list = []
 santa_file = "./santa.yml"
-
+send_email = True
 
 #Retry function for when list fails to create usable pairings.
 def retry(func):
@@ -80,10 +80,11 @@ def generate_list():
         update_list(output_file, update_data)
         santa_list.append(message)
         gifted.remove(gift)
-    email_data = import_file(output_file, "r")
-    for x in email_data.keys():
-        email_body = f"{x}, you will be santa for {email_data[x]['gift']}."
-        send_email(email_subject, email_sender, email_data[x]["email"], email_body, email_app_pass)
+    if send_email:
+        email_data = import_file(output_file, "r")
+        for x in email_data.keys():
+            email_body = f"{x}, you will be santa for {email_data[x]['gift']}."
+            send_email(email_subject, email_sender, email_data[x]["email"], email_body, email_app_pass)
     return
 
 
